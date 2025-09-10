@@ -1,0 +1,24 @@
+networks:
+  theprepared:
+    external: true
+
+ 
+services:
+  wordpress_app:
+    build:
+      context: ./wordpress-app
+      dockerfile: Dockerfile
+    container_name: wordpress_app
+    restart: unless-stopped
+    user: "${UID}:${GID}"
+    environment:
+      MARIADB_HOST: mariadb_db
+      MARIADB_USER: ${MARIADB_USER}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
+      MARIADB_DB: ${MARIADB_DB}
+    volumes:
+      - ./wordpress-app/www/html:/var/www/html/wordpress
+      - ./wordpress-app/www/phpmyadmin:/var/www/phpmyadmin
+      - ./wordpress-app/phpmyadmin-config.inc.php:/var/www/phpmyadmin/config.inc.php
+    networks:
+      - theprepared
