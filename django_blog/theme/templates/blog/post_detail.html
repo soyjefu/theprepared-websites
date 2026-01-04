@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load markdownify %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+<article class="blog-post">
+  <h1 class="blog-post-title mb-1">{{ post.title }}</h1>
+  <p class="blog-post-meta text-muted">{{ post.published_at|date:"F j, Y" }} by {{ post.author.username }}</p>
+
+  <div class="mb-3">
+    {% for cat in post.categories.all %}
+      <span class="badge bg-secondary">{{ cat.name }}</span>
+    {% endfor %}
+  </div>
+
+  <hr>
+
+  <div class="blog-content mt-4">
+    <!-- Use safe filter because WP content is HTML. If Markdown, use markdownify -->
+    <!-- Assuming WP content is HTML -->
+    {{ post.content|safe }}
+  </div>
+
+  <div class="mt-5">
+    <h5>Tags:</h5>
+    {% for tag in post.tags.all %}
+      <span class="badge bg-light text-dark border">{{ tag.name }}</span>
+    {% endfor %}
+  </div>
+</article>
+
+<div class="mt-5">
+    <a href="{% url 'blog:post_list' %}" class="btn btn-outline-secondary">&larr; Back to Home</a>
+</div>
+{% endblock %}

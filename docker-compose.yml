@@ -22,3 +22,25 @@ services:
       - ./wordpress-app/phpmyadmin-config.inc.php:/var/www/phpmyadmin/config.inc.php
     networks:
       - theprepared
+
+  django_blog:
+    build:
+      context: ./django_blog
+      dockerfile: Dockerfile
+    container_name: django_blog
+    restart: unless-stopped
+    environment:
+      SECRET_KEY: "django-insecure-dev-key"
+      DEBUG: "True"
+      DB_NAME: ${POSTGRES_DB}
+      DB_USER: ${POSTGRES_USER}
+      DB_PASS: ${POSTGRES_PASSWORD}
+      DB_HOST: postgres_db
+      DB_PORT: 5432
+    volumes:
+      - ./django_blog:/app
+      - ./django_blog/media:/app/media
+    networks:
+      - theprepared
+    ports:
+      - "8002:8000"

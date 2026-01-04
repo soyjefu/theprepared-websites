@@ -1,0 +1,667 @@
+[
+    {
+        "term_id": 1,
+        "name": "미분류",
+        "slug": "%eb%af%b8-%eb%b6%84%eb%a5%98",
+        "taxonomy": "category",
+        "term_taxonomy_id": 1
+    },
+    {
+        "term_id": 2,
+        "name": "문화",
+        "slug": "culture",
+        "taxonomy": "category",
+        "term_taxonomy_id": 2
+    },
+    {
+        "term_id": 3,
+        "name": "사회",
+        "slug": "society",
+        "taxonomy": "category",
+        "term_taxonomy_id": 3
+    },
+    {
+        "term_id": 4,
+        "name": "영상 기록",
+        "slug": "image-records",
+        "taxonomy": "category",
+        "term_taxonomy_id": 4
+    },
+    {
+        "term_id": 5,
+        "name": "후기",
+        "slug": "reviews",
+        "taxonomy": "category",
+        "term_taxonomy_id": 5
+    },
+    {
+        "term_id": 6,
+        "name": "대전광역시",
+        "slug": "%eb%8c%80%ec%a0%84%ea%b4%91%ec%97%ad%ec%8b%9c",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 6
+    },
+    {
+        "term_id": 7,
+        "name": "리뷰",
+        "slug": "%eb%a6%ac%eb%b7%b0",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 7
+    },
+    {
+        "term_id": 8,
+        "name": "문화",
+        "slug": "%eb%ac%b8%ed%99%94",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 8
+    },
+    {
+        "term_id": 9,
+        "name": "미술",
+        "slug": "%eb%af%b8%ec%88%a0",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 9
+    },
+    {
+        "term_id": 10,
+        "name": "보건",
+        "slug": "%eb%b3%b4%ea%b1%b4",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 10
+    },
+    {
+        "term_id": 11,
+        "name": "사진",
+        "slug": "%ec%82%ac%ec%a7%84",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 11
+    },
+    {
+        "term_id": 12,
+        "name": "파카",
+        "slug": "%ed%8c%8c%ec%b9%b4",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 12
+    },
+    {
+        "term_id": 13,
+        "name": "필기구",
+        "slug": "%ed%95%84%ea%b8%b0%ea%b5%ac",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 13
+    },
+    {
+        "term_id": 14,
+        "name": "아산시",
+        "slug": "%ec%95%84%ec%82%b0%ec%8b%9c",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 14
+    },
+    {
+        "term_id": 15,
+        "name": "역사",
+        "slug": "%ec%97%ad%ec%82%ac",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 15
+    },
+    {
+        "term_id": 16,
+        "name": "영상",
+        "slug": "%ec%98%81%ec%83%81",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 16
+    },
+    {
+        "term_id": 17,
+        "name": "예술",
+        "slug": "%ec%98%88%ec%88%a0",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 17
+    },
+    {
+        "term_id": 18,
+        "name": "음식",
+        "slug": "%ec%9d%8c%ec%8b%9d",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 18
+    },
+    {
+        "term_id": 19,
+        "name": "일본음식",
+        "slug": "%ec%9d%bc%eb%b3%b8%ec%9d%8c%ec%8b%9d",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 19
+    },
+    {
+        "term_id": 20,
+        "name": "지리",
+        "slug": "%ec%a7%80%eb%a6%ac",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 20
+    },
+    {
+        "term_id": 21,
+        "name": "충청남도",
+        "slug": "%ec%b6%a9%ec%b2%ad%eb%82%a8%eb%8f%84",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 21
+    },
+    {
+        "term_id": 42,
+        "name": "예담",
+        "slug": "artistic-stories",
+        "taxonomy": "category",
+        "term_taxonomy_id": 42
+    },
+    {
+        "term_id": 43,
+        "name": "고지도 벡터화",
+        "slug": "old-map-vectorization",
+        "taxonomy": "category",
+        "term_taxonomy_id": 43
+    },
+    {
+        "term_id": 44,
+        "name": "k-pop",
+        "slug": "k-pop",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 44
+    },
+    {
+        "term_id": 45,
+        "name": "보이그룹",
+        "slug": "%eb%b3%b4%ec%9d%b4%ea%b7%b8%eb%a3%b9",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 45
+    },
+    {
+        "term_id": 46,
+        "name": "걸그룹",
+        "slug": "%ea%b1%b8%ea%b7%b8%eb%a3%b9",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 46
+    },
+    {
+        "term_id": 57,
+        "name": "Python",
+        "slug": "python",
+        "taxonomy": "category",
+        "term_taxonomy_id": 57
+    },
+    {
+        "term_id": 58,
+        "name": "파이썬",
+        "slug": "%ed%8c%8c%ec%9d%b4%ec%8d%ac",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 58
+    },
+    {
+        "term_id": 59,
+        "name": "코딩",
+        "slug": "%ec%bd%94%eb%94%a9",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 59
+    },
+    {
+        "term_id": 60,
+        "name": "블로그",
+        "slug": "%eb%b8%94%eb%a1%9c%ea%b7%b8",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 60
+    },
+    {
+        "term_id": 61,
+        "name": "워드프레스",
+        "slug": "%ec%9b%8c%eb%93%9c%ed%94%84%eb%a0%88%ec%8a%a4",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 61
+    },
+    {
+        "term_id": 62,
+        "name": "print()",
+        "slug": "print",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 62
+    },
+    {
+        "term_id": 63,
+        "name": "hello",
+        "slug": "hello",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 63
+    },
+    {
+        "term_id": 64,
+        "name": "hello\\",
+        "slug": "hello-2",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 64
+    },
+    {
+        "term_id": 65,
+        "name": "helloworld",
+        "slug": "helloworld",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 65
+    },
+    {
+        "term_id": 66,
+        "name": "hello world",
+        "slug": "hello-world",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 66
+    },
+    {
+        "term_id": 67,
+        "name": "함수",
+        "slug": "%ed%95%a8%ec%88%98",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 67
+    },
+    {
+        "term_id": 68,
+        "name": "사회",
+        "slug": "%ec%82%ac%ed%9a%8c",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 68
+    },
+    {
+        "term_id": 69,
+        "name": "다문화",
+        "slug": "%eb%8b%a4%eb%ac%b8%ed%99%94",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 69
+    },
+    {
+        "term_id": 70,
+        "name": "성평등",
+        "slug": "%ec%84%b1%ed%8f%89%eb%93%b1",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 70
+    },
+    {
+        "term_id": 71,
+        "name": "출산률",
+        "slug": "%ec%b6%9c%ec%82%b0%eb%a5%a0",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 71
+    },
+    {
+        "term_id": 72,
+        "name": "지구촌",
+        "slug": "%ec%a7%80%ea%b5%ac%ec%b4%8c",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 72
+    },
+    {
+        "term_id": 73,
+        "name": "SOUTH KOREA IS OVER",
+        "slug": "south-korea-is-over",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 73
+    },
+    {
+        "term_id": 74,
+        "name": "정치",
+        "slug": "%ec%a0%95%ec%b9%98",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 74
+    },
+    {
+        "term_id": 75,
+        "name": "이분법",
+        "slug": "%ec%9d%b4%eb%b6%84%eb%b2%95",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 75
+    },
+    {
+        "term_id": 76,
+        "name": "계엄령",
+        "slug": "%ea%b3%84%ec%97%84%eb%a0%b9",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 76
+    },
+    {
+        "term_id": 77,
+        "name": "한국",
+        "slug": "%ed%95%9c%ea%b5%ad",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 77
+    },
+    {
+        "term_id": 78,
+        "name": "교육수준",
+        "slug": "%ea%b5%90%ec%9c%a1%ec%88%98%ec%a4%80",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 78
+    },
+    {
+        "term_id": 79,
+        "name": "미국",
+        "slug": "%eb%af%b8%ea%b5%ad",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 79
+    },
+    {
+        "term_id": 80,
+        "name": "대선",
+        "slug": "%eb%8c%80%ec%84%a0",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 80
+    },
+    {
+        "term_id": 81,
+        "name": "대통령",
+        "slug": "%eb%8c%80%ed%86%b5%eb%a0%b9",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 81
+    },
+    {
+        "term_id": 82,
+        "name": "이준석",
+        "slug": "%ec%9d%b4%ec%a4%80%ec%84%9d",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 82
+    },
+    {
+        "term_id": 83,
+        "name": "이재명",
+        "slug": "%ec%9d%b4%ec%9e%ac%eb%aa%85",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 83
+    },
+    {
+        "term_id": 84,
+        "name": "김문수",
+        "slug": "%ea%b9%80%eb%ac%b8%ec%88%98",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 84
+    },
+    {
+        "term_id": 85,
+        "name": "선거",
+        "slug": "%ec%84%a0%ea%b1%b0",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 85
+    },
+    {
+        "term_id": 86,
+        "name": "프레임",
+        "slug": "%ed%94%84%eb%a0%88%ec%9e%84",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 86
+    },
+    {
+        "term_id": 87,
+        "name": "서구식문화",
+        "slug": "%ec%84%9c%ea%b5%ac%ec%8b%9d%eb%ac%b8%ed%99%94",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 87
+    },
+    {
+        "term_id": 88,
+        "name": "분리수면",
+        "slug": "%eb%b6%84%eb%a6%ac%ec%88%98%eb%a9%b4",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 88
+    },
+    {
+        "term_id": 89,
+        "name": "일본문화",
+        "slug": "%ec%9d%bc%eb%b3%b8%eb%ac%b8%ed%99%94",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 89
+    },
+    {
+        "term_id": 90,
+        "name": "오차즈케",
+        "slug": "%ec%98%a4%ec%b0%a8%ec%a6%88%ec%bc%80",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 90
+    },
+    {
+        "term_id": 91,
+        "name": "여주시",
+        "slug": "%ec%97%ac%ec%a3%bc%ec%8b%9c",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 91
+    },
+    {
+        "term_id": 92,
+        "name": "경기도",
+        "slug": "%ea%b2%bd%ea%b8%b0%eb%8f%84",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 92
+    },
+    {
+        "term_id": 93,
+        "name": "강천섬",
+        "slug": "%ea%b0%95%ec%b2%9c%ec%84%ac",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 93
+    },
+    {
+        "term_id": 94,
+        "name": "남한강",
+        "slug": "%eb%82%a8%ed%95%9c%ea%b0%95",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 94
+    },
+    {
+        "term_id": 95,
+        "name": "억세",
+        "slug": "%ec%96%b5%ec%84%b8",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 95
+    },
+    {
+        "term_id": 96,
+        "name": "내장산",
+        "slug": "%eb%82%b4%ec%9e%a5%ec%82%b0",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 96
+    },
+    {
+        "term_id": 97,
+        "name": "정읍",
+        "slug": "%ec%a0%95%ec%9d%8d",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 97
+    },
+    {
+        "term_id": 98,
+        "name": "단풍",
+        "slug": "%eb%8b%a8%ed%92%8d",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 98
+    },
+    {
+        "term_id": 99,
+        "name": "대야산",
+        "slug": "%eb%8c%80%ec%95%bc%ec%82%b0",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 99
+    },
+    {
+        "term_id": 100,
+        "name": "늦여름",
+        "slug": "%eb%8a%a6%ec%97%ac%eb%a6%84",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 100
+    },
+    {
+        "term_id": 101,
+        "name": "천안",
+        "slug": "%ec%b2%9c%ec%95%88",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 101
+    },
+    {
+        "term_id": 102,
+        "name": "병천",
+        "slug": "%eb%b3%91%ec%b2%9c",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 102
+    },
+    {
+        "term_id": 103,
+        "name": "아우내",
+        "slug": "%ec%95%84%ec%9a%b0%eb%82%b4",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 103
+    },
+    {
+        "term_id": 104,
+        "name": "독립기념관",
+        "slug": "%eb%8f%85%eb%a6%bd%ea%b8%b0%eb%85%90%ea%b4%80",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 104
+    },
+    {
+        "term_id": 105,
+        "name": "독립",
+        "slug": "%eb%8f%85%eb%a6%bd",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 105
+    },
+    {
+        "term_id": 106,
+        "name": "유관순",
+        "slug": "%ec%9c%a0%ea%b4%80%ec%88%9c",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 106
+    },
+    {
+        "term_id": 107,
+        "name": "서울시",
+        "slug": "%ec%84%9c%ec%9a%b8%ec%8b%9c",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 107
+    },
+    {
+        "term_id": 108,
+        "name": "뚝섬",
+        "slug": "%eb%9a%9d%ec%84%ac",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 108
+    },
+    {
+        "term_id": 109,
+        "name": "노을",
+        "slug": "%eb%85%b8%ec%9d%84",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 109
+    },
+    {
+        "term_id": 110,
+        "name": "삼청동",
+        "slug": "%ec%82%bc%ec%b2%ad%eb%8f%99",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 110
+    },
+    {
+        "term_id": 111,
+        "name": "종로",
+        "slug": "%ec%a2%85%eb%a1%9c",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 111
+    },
+    {
+        "term_id": 112,
+        "name": "여수",
+        "slug": "%ec%97%ac%ec%88%98",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 112
+    },
+    {
+        "term_id": 113,
+        "name": "우노맨션",
+        "slug": "%ec%9a%b0%eb%85%b8%eb%a7%a8%ec%85%98",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 113
+    },
+    {
+        "term_id": 114,
+        "name": "포항",
+        "slug": "%ed%8f%ac%ed%95%ad",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 114
+    },
+    {
+        "term_id": 115,
+        "name": "불꽃놀이",
+        "slug": "%eb%b6%88%ea%bd%83%eb%86%80%ec%9d%b4",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 115
+    },
+    {
+        "term_id": 116,
+        "name": "축제",
+        "slug": "%ec%b6%95%ec%a0%9c",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 116
+    },
+    {
+        "term_id": 117,
+        "name": "동해바다",
+        "slug": "%eb%8f%99%ed%95%b4%eb%b0%94%eb%8b%a4",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 117
+    },
+    {
+        "term_id": 118,
+        "name": "제주도",
+        "slug": "%ec%a0%9c%ec%a3%bc%eb%8f%84",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 118
+    },
+    {
+        "term_id": 119,
+        "name": "노루",
+        "slug": "%eb%85%b8%eb%a3%a8",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 119
+    },
+    {
+        "term_id": 120,
+        "name": "귤",
+        "slug": "%ea%b7%a4",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 120
+    },
+    {
+        "term_id": 121,
+        "name": "천체관측",
+        "slug": "%ec%b2%9c%ec%b2%b4%ea%b4%80%ec%b8%a1",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 121
+    },
+    {
+        "term_id": 122,
+        "name": "옥천군",
+        "slug": "%ec%98%a5%ec%b2%9c%ea%b5%b0",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 122
+    },
+    {
+        "term_id": 123,
+        "name": "해돋이",
+        "slug": "%ed%95%b4%eb%8f%8b%ec%9d%b4",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 123
+    },
+    {
+        "term_id": 124,
+        "name": "새해",
+        "slug": "%ec%83%88%ed%95%b4",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 124
+    },
+    {
+        "term_id": 125,
+        "name": "서천군",
+        "slug": "%ec%84%9c%ec%b2%9c%ea%b5%b0",
+        "taxonomy": "post_tag",
+        "term_taxonomy_id": 125
+    }
+]
