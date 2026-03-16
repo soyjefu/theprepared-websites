@@ -12,6 +12,7 @@ services:
     restart: unless-stopped
     user: "${UID}:${GID}"
     environment:
+      TZ: Asia/Seoul
       MARIADB_HOST: mariadb_db
       MARIADB_USER: ${MARIADB_USER}
       MARIADB_PASSWORD: ${MARIADB_PASSWORD}
@@ -20,5 +21,7 @@ services:
       - ./wordpress-app/www/html:/var/www/html/wordpress
       - ./wordpress-app/www/phpmyadmin:/var/www/phpmyadmin
       - ./wordpress-app/phpmyadmin-config.inc.php:/var/www/phpmyadmin/config.inc.php
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
     networks:
       - theprepared
