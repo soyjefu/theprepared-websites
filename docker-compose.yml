@@ -11,6 +11,11 @@ services:
     container_name: wordpress_app
     restart: unless-stopped
     user: "${UID}:${GID}"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
     environment:
       TZ: Asia/Seoul
       MARIADB_HOST: mariadb_db
