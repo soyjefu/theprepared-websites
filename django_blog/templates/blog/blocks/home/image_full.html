@@ -1,0 +1,11 @@
+{% load picture %}
+<figure class="home-section" style="margin:0;">
+  {% if self.align == "full" %}
+    <div style="margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw);">
+      {% picture self.image "width-1920" alt=self.caption %}
+    </div>
+  {% else %}
+    {% picture self.image "width-1200" alt=self.caption %}
+  {% endif %}
+  {% if self.caption %}<figcaption style="color:var(--color-muted); font-size:var(--fs-small); text-align:center; margin-top:.5rem;">{{ self.caption }}</figcaption>{% endif %}
+</figure>

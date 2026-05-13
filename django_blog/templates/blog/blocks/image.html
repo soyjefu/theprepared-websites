@@ -1,0 +1,11 @@
+{% load picture %}
+<figure class="post-image">
+  {% if value.link %}
+    <a href="{{ value.link }}" rel="noopener" target="_blank">
+      {% picture value.image "width-800" alt=value.alt_override %}
+    </a>
+  {% else %}
+    {% picture value.image "width-800" alt=value.alt_override lightbox=True %}
+  {% endif %}
+  {% if value.caption %}<figcaption>{{ value.caption }}</figcaption>{% endif %}
+</figure>

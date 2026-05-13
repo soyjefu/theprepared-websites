@@ -1,0 +1,51 @@
+{% load static dict_tags %}
+<section id="comments" class="comments-thread">
+  <p class="comments-thread__head">댓글 <strong>{{ approved_count }}</strong></p>
+
+  <ol class="comment-list">
+    {% for c in roots %}
+      {% include "comments/_item.html" with c=c depth=0 %}
+      {% for r in children|get_item:c.id %}
+        {% include "comments/_item.html" with c=r depth=1 %}
+      {% endfor %}
+    {% empty %}
+      <li class="comments-thread__empty">아직 댓글이 없습니다.</li>
+    {% endfor %}
+  </ol>
+
+  <form class="comment-form" method="post" action="{% url 'comments:submit' %}" autocomplete="off">
+    {% csrf_token %}
+    <input type="hidden" name="page_id" value="{{ page.pk }}">
+    <input type="hidden" name="form_token" value="{{ form.form_token.value }}">
+    {# honeypot #}
+    <input class="comment-form__honeypot" type="text" name="website" value="" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+    {% if visitor %}
+      <p class="comment-form__identity">
+        <strong>{{ visitor.nickname }}</strong>으로 작성합니다.
+        {% if visitor.is_trusted %}<span class="comment__badge comment__badge--trusted">신뢰</span>{% endif %}
+        <details class="nickname-change">
+          <summary>닉네임 변경</summary>
+          <form method="post" action="{% url 'comments:change_nickname' %}" class="nickname-change__form">
+            {% csrf_token %}
+            <input type="text" name="nickname" required maxlength="20" placeholder="새 닉네임 (20자 이내)">
+            <button type="submit">변경</button>
+            <span class="nickname-change__note">7일에 1회만 변경 가능</span>
+          </form>
+        </details>
+      </p>
+    {% else %}
+      <div class="comment-form__fields">
+        <label>닉네임 <input type="text" name="nickname" required maxlength="20" placeholder="20자 이내"></label>
+        <label>이메일 <input type="email" name="email" placeholder="(선택, 답글 알림)"></label>
+        <label><input type="checkbox" name="notify_replies"> 답글 알림</label>
+      </div>
+    {% endif %}
+
+    <textarea class="comment-form__textarea" name="body" rows="3" maxlength="5000" required placeholder="댓글을 남겨주세요"></textarea>
+
+    <div class="comment-form__submit-row">
+      <button type="submit" class="comment-form__submit">댓글 등록 →</button>
+    </div>
+  </form>
+</section>

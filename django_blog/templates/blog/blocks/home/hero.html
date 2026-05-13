@@ -1,0 +1,11 @@
+{% load picture %}
+<section class="hero">
+  <h1>{{ self.title }}</h1>
+  {% if self.subtitle %}<p class="lead">{{ self.subtitle }}</p>{% endif %}
+  {% if self.image %}
+    <div style="margin-top: var(--space-30);">{% picture self.image "width-1200" alt=self.title %}</div>
+  {% endif %}
+  {% if self.link_label and self.link_url %}
+    <p style="margin-top: var(--space-30);"><a class="chip" href="{{ self.link_url }}">{{ self.link_label }} →</a></p>
+  {% endif %}
+</section>

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+{% block title %}검색{% endblock %}
+{% block content %}
+<h1>검색</h1>
+<form method="get" action="{% url 'search:search' %}" style="margin-bottom:2rem;">
+  <input type="search" name="q" value="{{ query }}" placeholder="검색어 입력" autofocus
+         style="width:100%; padding:.6rem .9rem; font-size:1rem; border:1px solid var(--color-border); border-radius:6px;">
+</form>
+
+{% if query %}
+  <p class="meta">‘{{ query }}’ 검색 결과 {{ results|length }}건</p>
+  <ul class="post-list">
+    {% for post in results %}
+      <li class="post-list-item">
+        <div class="body">
+          <div class="meta-row">
+            {% if post.specific.category %}<span>{{ post.specific.category.name }}</span>{% endif %}
+            <time>{{ post.first_published_at|date:'Y-m-d' }}</time>
+          </div>
+          <h2><a href="{% pageurl post %}">{{ post.title }}</a></h2>
+          {% if post.specific.intro %}<p class="excerpt">{{ post.specific.intro|truncatechars:120 }}</p>{% endif %}
+        </div>
+      </li>
+    {% empty %}
+      <li>검색 결과가 없습니다.</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+{% endblock %}

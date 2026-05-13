@@ -1,0 +1,55 @@
+# Core - Wagtail 6.3 LTS (Django 5.1 호환)
+Django>=5.1,<5.2
+wagtail>=6.3,<6.4
+
+# DB / Cache
+psycopg[binary]>=3.2
+django-redis>=5.4
+
+# Serving
+gunicorn>=23.0
+uvicorn[standard]>=0.32
+whitenoise>=6.7
+
+# Images: AVIF/WebP 자동 변환
+Pillow>=11.0
+pillow-avif-plugin>=1.4
+Willow[heif]>=1.9
+
+# SEO
+wagtail-seo>=3.0
+
+# Async
+celery[redis]>=5.4
+django-celery-beat>=2.7
+
+# AI / SEO 자동화
+google-genai>=1.0
+requests>=2.32
+beautifulsoup4>=4.12
+
+# MySQL/MariaDB driver (WP 마이그레이션 read-only)
+PyMySQL>=1.1
+
+# Comments / sanitize
+bleach>=6.2
+markdown-it-py>=3.0
+linkify-it-py>=2.0
+
+# Security
+django-ratelimit>=4.1
+django-axes>=7.0
+django-csp>=3.8
+django-recaptcha>=4.0
+wagtail-2fa>=1.6
+argon2-cffi>=23.1
+
+# env / config
+django-environ>=0.11
+
+# Observability
+sentry-sdk[django]>=2.18
+
+# Feeds / Tags
+feedgen>=1.0
+# django-taggit는 wagtail 의존성으로 자동 설치됨

@@ -1,0 +1,179 @@
+{% extends "wagtailadmin/base.html" %}
+{% load wagtailadmin_tags %}
+
+{% block titletag %}블로그 통계{% endblock %}
+
+{% block extra_css %}
+<style>
+  .stats-wrap { padding: 1rem 1.5rem; max-width: 1280px; }
+  .stats-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1rem; margin-bottom: 2rem;
+  }
+  .stats-card {
+    border: 1px solid var(--w-color-border-furniture, #e6e6e6);
+    border-radius: 6px; padding: 1rem 1.2rem;
+    background: var(--w-color-surface-page, #fff);
+  }
+  .stats-card__label { color: var(--w-color-text-meta, #666); font-size: 0.85rem; }
+  .stats-card__value { font-size: 1.8rem; font-weight: 600; line-height: 1.2; margin-top: 0.3rem; }
+  .stats-card__sub { color: var(--w-color-text-meta, #666); font-size: 0.78rem; margin-top: 0.25rem; }
+  .stats-section { margin-bottom: 2rem; }
+  .stats-section h2 { font-size: 1rem; margin: 0 0 0.8rem; color: var(--w-color-text-label, #333); font-weight: 600; }
+  .stats-table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+  .stats-table th, .stats-table td { padding: 0.5rem 0.6rem; border-bottom: 1px solid #eee; text-align: left; }
+  .stats-table th { font-weight: 500; color: #666; }
+  .stats-table td.n { text-align: right; font-variant-numeric: tabular-nums; }
+  .stats-table a { color: inherit; }
+  .stats-cols { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; }
+  @media (max-width: 900px) { .stats-cols { grid-template-columns: 1fr; } }
+  .stats-bars { display: flex; align-items: flex-end; gap: 4px; height: 120px; padding: 0; margin: 1rem 0; }
+  .stats-bar {
+    flex: 1; display: flex; flex-direction: column; align-items: stretch;
+    position: relative; min-width: 12px;
+  }
+  .stats-bar__fill {
+    width: 100%; background: linear-gradient(180deg, #4f8cff 0%, #2c4d99 100%);
+    border-radius: 2px 2px 0 0; transition: opacity .15s;
+  }
+  .stats-bar:hover .stats-bar__fill { opacity: 0.85; }
+  .stats-bar__label {
+    text-align: center; font-size: 0.66rem; color: #999;
+    margin-top: 0.25rem; white-space: nowrap;
+  }
+  .stats-bar__value {
+    position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);
+    font-size: 0.7rem; color: #444; font-variant-numeric: tabular-nums;
+    margin-bottom: 2px;
+  }
+  .stats-recent-list { list-style: none; padding: 0; margin: 0; }
+  .stats-recent-list li {
+    padding: 0.6rem 0; border-bottom: 1px solid #f0f0f0;
+    display: flex; gap: 1rem; align-items: baseline;
+  }
+  .stats-recent-list .meta { color: #888; font-size: 0.78rem; min-width: 120px; }
+  .stats-recent-list .body { flex: 1; color: #333; }
+  .stats-recent-list .post { color: #666; font-size: 0.78rem; }
+</style>
+{% endblock %}
+
+{% block content %}
+<header class="w-mt-slim-header">
+  <h1>블로그 통계</h1>
+</header>
+
+<div class="stats-wrap">
+  {% if ga_dashboard_url or ga_measurement_id %}
+  <div style="display:flex; gap:1rem; align-items:center; margin:0 0 1.5rem; padding:0.8rem 1rem;
+              border:1px solid #d6e4ff; background:#f0f6ff; border-radius:6px; font-size:.92rem;">
+    <span style="font-weight:600; color:#1a56db;">Google Analytics</span>
+    {% if ga_measurement_id %}<code style="color:#555;">{{ ga_measurement_id }}</code>{% endif %}
+    <span style="flex:1;"></span>
+    {% if ga_dashboard_url %}
+      <a href="{{ ga_dashboard_url }}" target="_blank" rel="noopener"
+         style="padding:.4rem .8rem; background:#1a56db; color:#fff; text-decoration:none; border-radius:4px; font-weight:500;">
+        GA 대시보드 열기 →
+      </a>
+    {% else %}
+      <span style="color:#888; font-size:.85rem;">설정 → 사이트 네비게이션에 GA 대시보드 URL 입력</span>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  <div class="stats-grid">
+    <div class="stats-card"><div class="stats-card__label">전체 글</div><div class="stats-card__value">{{ totals.posts }}</div></div>
+    <div class="stats-card"><div class="stats-card__label">조회수</div><div class="stats-card__value">{{ totals.views }}</div><div class="stats-card__sub">24h {{ recent.views_24h }} · 7d {{ recent.views_7d }}</div></div>
+    <div class="stats-card"><div class="stats-card__label">공감</div><div class="stats-card__value">{{ totals.likes }}</div><div class="stats-card__sub">24h {{ recent.likes_24h }} · 7d {{ recent.likes_7d }}</div></div>
+    <div class="stats-card"><div class="stats-card__label">댓글</div><div class="stats-card__value">{{ totals.comments }}</div><div class="stats-card__sub">24h {{ recent.comments_24h }} · 7d {{ recent.comments_7d }}</div></div>
+    {% if totals.pending or totals.spam %}
+    <div class="stats-card" style="background:#fff8e1;"><div class="stats-card__label">검토 대기</div><div class="stats-card__value">{{ totals.pending }}</div><div class="stats-card__sub">spam {{ totals.spam }}</div></div>
+    {% endif %}
+  </div>
+
+  <section class="stats-section">
+    <h2>일별 활동 (최근 14일, 막대 = 조회수)</h2>
+    <div class="stats-bars">
+      {% for d in daily %}
+        <div class="stats-bar" title="{{ d.date|date:'Y-m-d' }} · 조회 {{ d.views }} · 댓글 {{ d.comments }} · 공감 {{ d.likes }}">
+          {% if d.views %}<span class="stats-bar__value">{{ d.views }}</span>{% endif %}
+          <div class="stats-bar__fill" style="height: {{ d.views_pct }}%; min-height: {% if d.views %}2px{% else %}0{% endif %};"></div>
+          <span class="stats-bar__label">{{ d.date|date:'m/d' }}</span>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="stats-section stats-cols">
+    <div>
+      <h2>조회 Top 5</h2>
+      <table class="stats-table">
+        <tbody>
+          {% for p in top_views %}
+          <tr><td><a href="{{ p.url }}" target="_blank">{{ p.title }}</a></td><td class="n">{{ p.count }}</td></tr>
+          {% empty %}
+          <tr><td colspan="2" style="color:#999;">아직 조회 기록 없음</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <h2>공감 Top 5</h2>
+      <table class="stats-table">
+        <tbody>
+          {% for p in top_likes %}
+          <tr><td><a href="{{ p.url }}" target="_blank">{{ p.title }}</a></td><td class="n">{{ p.count }}</td></tr>
+          {% empty %}
+          <tr><td colspan="2" style="color:#999;">아직 공감 없음</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <h2>댓글 Top 5</h2>
+      <table class="stats-table">
+        <tbody>
+          {% for p in top_comments %}
+          <tr><td><a href="{{ p.url }}" target="_blank">{{ p.title }}</a></td><td class="n">{{ p.count }}</td></tr>
+          {% empty %}
+          <tr><td colspan="2" style="color:#999;">아직 댓글 없음</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="stats-section">
+    <h2>카테고리별 글 수</h2>
+    <table class="stats-table" style="max-width: 600px;">
+      <tbody>
+      {% for c in categories %}
+        <tr>
+          <td><span style="color:#999; font-size:.85em;">{{ c.parent }} ›</span> {{ c.name }}</td>
+          <td class="n">{{ c.n }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </section>
+
+  <section class="stats-section">
+    <h2>최근 댓글 10개</h2>
+    <ul class="stats-recent-list">
+      {% for c in recent_comments %}
+        <li>
+          <div class="meta">
+            <strong>{{ c.nickname_snapshot }}</strong><br>
+            <time datetime="{{ c.created_at|date:'c' }}">{{ c.created_at|date:'m-d H:i' }}</time>
+          </div>
+          <div class="body">
+            <div>{{ c.body|truncatechars:120 }}</div>
+            <div class="post">→ <a href="{{ c.page.url }}#comment-{{ c.pk }}" target="_blank">{{ c.page.title }}</a></div>
+          </div>
+        </li>
+      {% empty %}
+        <li><div class="body" style="color:#999;">최근 댓글이 없습니다.</div></li>
+      {% endfor %}
+    </ul>
+  </section>
+</div>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% load static %}
+<li id="comment-{{ c.pk }}" class="comment{% if depth %} comment--reply{% endif %}">
+  <div class="comment__avatar" aria-hidden="true">{{ c.nickname_snapshot|first|default:"?" }}</div>
+  <div class="comment__body">
+    <div class="comment__meta">
+      <span class="comment__nickname">{{ c.nickname_snapshot }}</span>
+      {% if c.visitor.is_trusted %}<span class="comment__badge comment__badge--trusted">신뢰</span>{% endif %}
+      {% if c.admin_user %}<span class="comment__badge comment__badge--admin">관리자</span>{% endif %}
+      <time class="comment__time" datetime="{{ c.created_at|date:'c' }}">{{ c.created_at|date:'Y-m-d H:i' }}</time>
+    </div>
+    <div class="comment__text">{{ c.body_html|safe }}</div>
+
+    {# 액션: 답글 / 수정 / 삭제 #}
+    <div class="comment__actions">
+      {% if not depth %}
+        <details class="comment__action comment__reply">
+          <summary>답글</summary>
+          <form method="post" action="{% url 'comments:submit' %}" class="comment-form comment-form--reply" autocomplete="off">
+            {% csrf_token %}
+            <input type="hidden" name="page_id" value="{{ page.pk }}">
+            <input type="hidden" name="parent_id" value="{{ c.pk }}">
+            <input type="hidden" name="form_token" value="{{ form_token }}">
+            <input class="comment-form__honeypot" type="text" name="website" value="" tabindex="-1" autocomplete="off" aria-hidden="true">
+            {% if not visitor %}
+              <div class="comment-form__fields">
+                <label>닉네임 <input type="text" name="nickname" required maxlength="20" placeholder="20자 이내"></label>
+                <label>이메일 <input type="email" name="email" placeholder="(선택)"></label>
+              </div>
+            {% endif %}
+            <textarea class="comment-form__textarea" name="body" rows="2" maxlength="5000" required placeholder="{{ c.nickname_snapshot }}님에게 답글을 남겨주세요"></textarea>
+            <div class="comment-form__submit-row">
+              <button type="submit" class="comment-form__submit">답글 등록 →</button>
+            </div>
+          </form>
+        </details>
+      {% endif %}
+
+      {% if is_admin or visitor_id and c.visitor_id == visitor_id %}
+        <details class="comment__action comment__edit">
+          <summary>수정</summary>
+          <form method="post" action="{% url 'comments:update' c.pk %}" class="comment-form comment-form--edit">
+            {% csrf_token %}
+            <textarea class="comment-form__textarea" name="body" rows="2" maxlength="5000" required>{{ c.body }}</textarea>
+            <div class="comment-form__submit-row">
+              <button type="submit" class="comment-form__submit">저장 →</button>
+            </div>
+          </form>
+        </details>
+
+        <form method="post" action="{% url 'comments:delete' c.pk %}" class="comment__action comment__delete-form" onsubmit="return confirm('이 댓글을 삭제하시겠습니까?');">
+          {% csrf_token %}
+          <button type="submit" class="comment__action-btn comment__delete">삭제</button>
+        </form>
+      {% endif %}
+    </div>
+  </div>
+</li>

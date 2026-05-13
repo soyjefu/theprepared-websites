@@ -1,0 +1,75 @@
+networks:
+  theprepared:
+    external: true
+
+# bind mount만 사용 (named volume 미사용)
+
+x-build: &django_build
+  build:
+    context: ..
+    dockerfile: compose/Dockerfile
+    args:
+      UID: ${UID:-1000}
+      GID: ${GID:-1000}
+  user: "${UID:-1000}:${GID:-1000}"
+  env_file:
+    - ../.env
+  environment:
+    TZ: Asia/Seoul
+    DJANGO_SETTINGS_MODULE: ${DJANGO_SETTINGS_MODULE:-prepared_blog.settings.dev}
+  volumes:
+    - ..:/app
+    # bind mount (호스트 1002 owner) — Docker named volume의 root ownership 회피
+    - ../media:/app/media
+    - ../staticfiles:/app/staticfiles
+    # WordPress uploads (read-only, 마이그레이션 전용)
+    - ../../wordpress-app/www/html/wp-content/uploads:/wp-uploads:ro
+  networks:
+    - theprepared
+  restart: unless-stopped
+  logging:
+    driver: json-file
+    options:
+      max-size: "10m"
+      max-file: "3"
+
+services:
+  django_blog_web:
+    <<: *django_build
+    container_name: django_blog_web
+    command: ["web"]
+    ports:
+      # 127.0.0.1에만 바인드 — SSH 터널 전용 (외부 직접 접근 불가)
+      - "127.0.0.1:8011:8000"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=theprepared"
+      - "traefik.http.routers.django_blog.rule=Host(`${BLOG_HOST:-staging.theprepared.local}`)"
+      - "traefik.http.routers.django_blog.entrypoints=websecure"
+      - "traefik.http.routers.django_blog.tls.certresolver=letsencrypt"
+      - "traefik.http.services.django_blog.loadbalancer.server.port=8000"
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 1024M
+
+  django_blog_celery:
+    <<: *django_build
+    container_name: django_blog_celery
+    command: ["worker"]
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 512M
+
+  django_blog_beat:
+    <<: *django_build
+    container_name: django_blog_beat
+    command: ["beat"]
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 256M

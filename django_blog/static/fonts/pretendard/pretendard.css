@@ -1,0 +1,27 @@
+/* Pretendard KR static subset — 사용 weight별로 분리. 각 ~260KB.
+   브라우저가 페이지에서 실제 사용하는 weight만 자동 다운로드. */
+@font-face {
+  font-family: 'Pretendard';
+  font-style: normal; font-weight: 400; font-display: swap;
+  src: url('Pretendard-Regular.subset.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Pretendard';
+  font-style: normal; font-weight: 500; font-display: swap;
+  src: url('Pretendard-Medium.subset.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Pretendard';
+  font-style: normal; font-weight: 600; font-display: swap;
+  src: url('Pretendard-SemiBold.subset.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Pretendard';
+  font-style: normal; font-weight: 700; font-display: swap;
+  src: url('Pretendard-Bold.subset.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Pretendard';
+  font-style: normal; font-weight: 800; font-display: swap;
+  src: url('Pretendard-ExtraBold.subset.woff2') format('woff2');
+}

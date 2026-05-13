@@ -1,8 +1,34 @@
 wordpress-app/www/html
 .env
+.env.local
 
 __pycache__/
 *.py[cod]
-*.class
+*$py.class
+*.so
+.Python
 .DS_Store
 .vscode/
+
+# Django / Wagtail
+django_blog/staticfiles/
+django_blog/media/
+django_blog/.env
+django_blog/.env.*
+!django_blog/.env.example
+django_blog/*.sqlite3
+django_blog/.pytest_cache/
+django_blog/.coverage
+django_blog/htmlcov/
+django_blog/celerybeat-schedule
+django_blog/celerybeat.pid
+
+# Python venv (도커 외 실수 방지)
+venv/
+.venv/
+env/
+
+# Editors
+*.swp
+*~
+.idea/

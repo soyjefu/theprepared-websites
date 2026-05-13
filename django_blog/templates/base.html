@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+{% load static wagtailuserbar wagtailcore_tags picture %}
+{% load wagtailsettings_tags %}
+{% get_settings %}
+{% with nav=settings.blog.NavSettings effective_site_name=settings.blog.NavSettings.site_name_override|default:SITE_NAME effective_tagline=settings.blog.NavSettings.tagline_override|default:SITE_TAGLINE %}
+<html lang="ko" prefix="og: https://ogp.me/ns#">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}{% if page %}{% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}{% else %}{{ effective_site_name }}{% endif %}{% endblock %} · {{ effective_site_name }}</title>
+<meta name="description" content="{% block meta_description %}{% if page %}{{ page.specific.auto_description|default:effective_tagline }}{% else %}{{ effective_tagline }}{% endif %}{% endblock %}">
+{% if GOOGLE_SITE_VERIFICATION %}<meta name="google-site-verification" content="{{ GOOGLE_SITE_VERIFICATION }}">{% endif %}
+{% if NAVER_SITE_VERIFICATION %}<meta name="naver-site-verification" content="{{ NAVER_SITE_VERIFICATION }}">{% endif %}
+
+{# Canonical — 쿼리스트링 없는 정규 URL #}
+<link rel="canonical" href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">{% if page %}{% endif %}
+
+{# Favicon — prep. 로고 #}
+<link rel="icon" type="image/jpeg" href="{% static 'favicon/logo.jpg' %}">
+<link rel="shortcut icon" href="{% static 'favicon/logo.jpg' %}">
+<link rel="apple-touch-icon" href="{% static 'favicon/logo.jpg' %}">
+
+{# Open Graph #}
+<meta property="og:site_name" content="{{ effective_site_name }}">
+<meta property="og:title" content="{% block og_title %}{% if page.seo_title %}{{ page.seo_title }}{% elif page %}{{ page.title }}{% else %}{{ effective_site_name }}{% endif %}{% endblock %}">
+<meta property="og:description" content="{% block og_description %}{% if page %}{{ page.specific.auto_description|default:effective_tagline }}{% else %}{{ effective_tagline }}{% endif %}{% endblock %}">
+<meta property="og:type" content="{% block og_type %}website{% endblock %}">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+{# 1200x630 rendition으로 OG/Twitter 카드 최적화. cover 없으면 nav 기본, 그것도 없으면 로고 #}
+{% block og_image %}{% og_image_url page.specific.cover_image as og_url %}{% if not og_url %}{% og_image_url nav.default_og_image as og_url %}{% endif %}{% if og_url %}<meta property="og:image" content="{{ og_url }}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/jpeg">{% else %}<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'favicon/logo.jpg' %}">{% endif %}{% endblock %}
+<meta property="og:locale" content="ko_KR">
+
+{# Twitter Card #}
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{% if page.seo_title %}{{ page.seo_title }}{% elif page %}{{ page.title }}{% else %}{{ effective_site_name }}{% endif %}">
+<meta name="twitter:description" content="{% if page %}{{ page.specific.auto_description|default:effective_tagline }}{% else %}{{ effective_tagline }}{% endif %}">
+{% if og_url %}<meta name="twitter:image" content="{{ og_url }}">{% else %}<meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'favicon/logo.jpg' %}">{% endif %}
+
+<link rel="alternate" type="application/rss+xml" title="{{ effective_site_name }} RSS" href="/feed/">
+{# 첫 페인트 최적화: 폰트 CSS 병렬 로드, 폰트 파일 1개 preload, 본 CSS 마지막 #}
+<link rel="preload" as="font" type="font/woff2" href="{% static 'fonts/pretendard/Pretendard-Medium.subset.woff2' %}" crossorigin>
+<link rel="stylesheet" href="{% static 'fonts/pretendard/pretendard.css' %}">
+<link rel="stylesheet" href="{% static 'fonts/astasans/asta-sans.css' %}">
+<link rel="stylesheet" href="{% static 'css/site.css' %}">
+<script defer src="{% static 'js/spa_nav.js' %}"></script>
+<script defer src="{% static 'js/like.js' %}"></script>
+<script defer src="{% static 'js/lightbox.js' %}"></script>
+<script defer src="{% static 'js/post_scroll.js' %}"></script>
+<script defer src="{% static 'js/post_toc.js' %}"></script>
+{# 홈에 WebSite + Organization JSON-LD (검색박스 + 사이트 정보). 글 페이지는 extra_meta에서 BlogPosting. #}
+{% if request.path == '/' %}{% include "seo/jsonld_website.html" %}{% endif %}
+
+{# Google Analytics 4 — measurement ID 입력된 경우만 #}
+{% if nav.ga4_measurement_id and not request.user.is_staff %}
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ nav.ga4_measurement_id }}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', '{{ nav.ga4_measurement_id }}', {anonymize_ip: true});
+</script>
+{% endif %}
+{% block extra_meta %}{% endblock %}
+{% block extra_head %}{% endblock %}
+</head>
+<body>
+{% wagtailuserbar %}
+
+<header class="site-header">
+  <div class="shell-wide site-header__inner">
+    <a class="site-title" href="/">{{ effective_site_name }}</a>
+    <nav class="site-nav" aria-label="주메뉴">
+      {% include "_nav_items.html" with stream=nav.header_menu %}
+      <a class="search-link" href="/search/" aria-label="검색" title="검색">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<main class="{% block main_class %}shell{% endblock %}">{% block content %}{% endblock %}</main>
+
+<footer class="site-footer">
+  <div class="shell-wide site-footer__inner">
+    <div class="site-title-block">
+      <a class="site-title" href="/">{{ effective_site_name }}</a>
+      {% if effective_tagline %}<p class="tagline">{{ effective_tagline }}</p>{% endif %}
+      {% if nav.footer_extra %}<p class="tagline" style="font-size:0.78rem; margin-top:0.4rem;">{{ nav.footer_extra }}</p>{% endif %}
+    </div>
+    <nav class="site-nav" aria-label="푸터 메뉴">
+      {% include "_nav_items.html" with stream=nav.footer_menu align_right=True %}
+    </nav>
+  </div>
+</footer>
+</body>
+</html>
+{% endwith %}

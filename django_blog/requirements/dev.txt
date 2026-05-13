@@ -1,0 +1,10 @@
+-r base.txt
+
+# Dev tooling
+pytest-django>=4.9
+pytest-cov>=6.0
+ipython>=8.30
+django-debug-toolbar>=4.4
+
+# Security scanning (CI)
+pip-audit>=2.7

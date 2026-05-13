@@ -1,0 +1,33 @@
+{% load wagtailcore_tags %}
+<section class="home-section" id="sec-{{ section_key }}">
+  <div class="section-grid-2col">
+    <div>
+      <div class="home-section__head" style="flex-direction:column; align-items:flex-start; gap:var(--space-20);">
+        <h2>{{ self.title }}</h2>
+        {% if self.subtitle %}<p class="lead">{{ self.subtitle }}</p>{% endif %}
+        {% if self.show_more_link and first_cat %}
+          <a class="more-link" href="{{ more_url }}">전체 보기 →</a>
+        {% endif %}
+      </div>
+    </div>
+    <div>
+      <ul class="post-list-line">
+        {% for post in posts %}
+          <li>
+            <a class="title" href="{% pageurl post %}">{{ post.title }}</a>
+            <time class="date" datetime="{{ post.first_published_at|date:'c' }}">{{ post.first_published_at|date:'Ymd' }}</time>
+          </li>
+        {% empty %}
+          <li class="date">글이 없습니다.</li>
+        {% endfor %}
+      </ul>
+      {% if has_prev or has_next %}
+        <nav class="section-pager" aria-label="섹션 페이지">
+          {% if has_prev %}<a class="more-link" href="?{{ section_key }}={{ page_num|add:'-1' }}#sec-{{ section_key }}">← 이전</a>{% else %}<span class="more-link" style="opacity:.35;">← 이전</span>{% endif %}
+          <span class="page-indicator">{{ page_num }} / {{ max_page }}</span>
+          {% if has_next %}<a class="more-link" href="?{{ section_key }}={{ page_num|add:'1' }}#sec-{{ section_key }}">다음 →</a>{% else %}<span class="more-link" style="opacity:.35;">다음 →</span>{% endif %}
+        </nav>
+      {% endif %}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,52 @@
+<figure class="post-map" style="margin: 2rem 0;">
+{% if value.provider == "google" and google_embed_key %}
+  <iframe
+    src="https://www.google.com/maps/embed/v1/place?key={{ google_embed_key }}&q={% if lat and lng %}{{ lat }},{{ lng }}{% else %}{{ addr_quoted }}{% endif %}&zoom={{ value.zoom }}&language=ko"
+    width="100%" height="{{ value.height }}" style="border:0;"
+    loading="lazy" allowfullscreen
+    referrerpolicy="no-referrer-when-downgrade"
+    sandbox="allow-scripts allow-same-origin allow-popups allow-forms"></iframe>
+{% elif value.provider == "naver" and lat and lng and naver_client_id %}
+  <div id="map_{{ value.address|slugify }}" style="width:100%; height:{{ value.height }}px; border:0; background:#f6f8fa;"
+       data-lat="{{ lat }}" data-lng="{{ lng }}" data-zoom="{{ value.zoom }}" data-label="{{ value.label|default:value.address }}"></div>
+  {# Web Dynamic Map JS lazy load #}
+  <script>
+  (function(){
+    var el = document.currentScript.previousElementSibling;
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(!e.isIntersecting) return;
+        io.disconnect();
+        if(window.naver && naver.maps){ render(); return; }
+        var s = document.createElement('script');
+        s.src = "https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId={{ naver_client_id }}";
+        s.onload = render;
+        document.head.appendChild(s);
+        function render(){
+          var pos = new naver.maps.LatLng(parseFloat(el.dataset.lat), parseFloat(el.dataset.lng));
+          var map = new naver.maps.Map(el, {center: pos, zoom: parseInt(el.dataset.zoom)});
+          new naver.maps.Marker({position: pos, map: map, title: el.dataset.label});
+        }
+      });
+    }, {rootMargin: "200px"});
+    io.observe(el);
+  })();
+  </script>
+{% else %}
+  <div style="padding:1rem; background:#f6f8fa; border:1px solid var(--color-border); border-radius:6px;">
+    <strong>{{ value.label|default:value.address }}</strong><br>
+    <span style="color:var(--color-muted);">{{ value.address }}</span>
+    {% if not naver_client_id and value.provider == "naver" %}
+      <p style="margin:0.5rem 0 0; color:var(--color-muted); font-size:0.85em;">
+        (네이버 지도 미설정 — NAVER_MAP_NCP_CLIENT_ID 필요)
+      </p>
+    {% endif %}
+  </div>
+{% endif %}
+{% if value.label %}<figcaption style="text-align:center; color:var(--color-muted); margin-top:0.5rem;">{{ value.label }}</figcaption>{% endif %}
+{% if value.show_link %}
+  <p style="text-align:center; margin-top:0.5rem;">
+    <a class="chip" href="{{ external_url }}" target="_blank" rel="noopener">{% if value.provider == "google" %}구글{% else %}네이버{% endif %} 지도에서 열기</a>
+  </p>
+{% endif %}
+</figure>

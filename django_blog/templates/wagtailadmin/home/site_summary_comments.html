@@ -1,0 +1,20 @@
+{% load i18n wagtailadmin_tags %}
+<li class="w-h-full">
+  <a href="{{ url }}"
+     class="w-relative w-flex w-w-full w-h-full w-min-h-[150px] w-overflow-hidden w-flex-col w-justify-end w-text-text-link-default w-bg-surface-menus w-no-underline hover:w-text-text-button hover:w-bg-surface-button-hover {% if pending %}w-ring-2 w-ring-warning-100{% endif %}">
+    <div class="w-flex w-items-end w-h-full w-px-4 w-pt-3">
+      {% icon name="comment" classname="initial w-w-7 w-h-7" %}
+      <div class="w-flex w-flex-col w-ml-3 w-mb-1">
+        <span class="w-text-h2 w-font-bold w-leading-none">{{ approved }}</span>
+        {% if pending %}
+          <span class="w-text-sm w-text-warning-100 w-font-bold">검토 대기 {{ pending }}건</span>
+        {% else %}
+          <span class="w-text-sm w-text-text-meta">검토 대기 없음</span>
+        {% endif %}
+      </div>
+    </div>
+    <div class="w-bg-surface-menu-item-active w-px-4 w-py-1 w-text-sm w-font-medium">
+      댓글
+    </div>
+  </a>
+</li>

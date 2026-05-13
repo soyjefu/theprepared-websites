@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+{% block content %}
+<header class="hero">
+  <h1>{% if current_tag %}#{{ current_tag.name }}{% else %}{{ page.title }}{% endif %}</h1>
+  {% if page.intro and not current_tag %}<p class="lead">{{ page.intro }}</p>{% endif %}
+</header>
+
+{% if page.intro_body %}{{ page.intro_body }}{% endif %}
+
+{% if current_tag %}
+  <ul class="post-list-line">
+    {% for post in posts %}
+      <li>
+        <a class="title" href="{% pageurl post %}">{{ post.title }}</a>
+        <time class="date">{{ post.first_published_at|date:'Ymd' }}</time>
+      </li>
+    {% empty %}
+      <li>이 태그의 글이 없습니다.</li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p style="margin-top: var(--space-50);">
+    {% for tag in all_tags %}
+      <a class="chip" href="{{ page.url }}{{ tag.slug }}/">#{{ tag.name }}</a>
+    {% endfor %}
+  </p>
+{% endif %}
+{% endblock %}

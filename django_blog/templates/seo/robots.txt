@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+User-agent: Yeti
+Allow: /
+
+User-agent: NaverBot
+Allow: /
+
+Disallow: {{ WAGTAIL_ADMIN_URL_PATH|default:"/cms-admin/" }}
+Disallow: /django-admin/
+Disallow: /c/
+
+Sitemap: https://theprepared.kr/sitemap.xml

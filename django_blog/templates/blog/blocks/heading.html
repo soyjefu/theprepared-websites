@@ -1,0 +1,3 @@
+{% spaceless %}
+{% if value.level == 'h3' %}<h3{% if value.anchor %} id="{{ value.anchor }}"{% endif %}>{{ value.text }}</h3>{% elif value.level == 'h4' %}<h4{% if value.anchor %} id="{{ value.anchor }}"{% endif %}>{{ value.text }}</h4>{% else %}<h2{% if value.anchor %} id="{{ value.anchor }}"{% endif %}>{{ value.text }}</h2>{% endif %}
+{% endspaceless %}

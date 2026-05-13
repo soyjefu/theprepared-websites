@@ -1,0 +1,26 @@
+{% load wagtailcore_tags %}
+<section class="home-section">
+  <div class="home-section__head"><h2>{{ self.title }}</h2></div>
+  <div class="category-grid" {% if self.columns == "3" %}style="grid-template-columns: 1fr 1fr 1fr;"{% endif %}>
+    {% for entry in showcase_items %}
+      {% with cat=entry.item.category posts=entry.posts %}
+        <div class="category-card">
+          <h3><a href="/blog/{{ cat.slug }}/">{{ cat.name }}</a></h3>
+          {% with desc=entry.item.description_override|default:cat.description %}
+            {% if desc %}<p class="desc">{{ desc }}</p>{% endif %}
+          {% endwith %}
+          <ul class="post-list-line">
+            {% for p in posts %}
+              <li>
+                <a class="title" href="{% pageurl p %}">{{ p.title }}</a>
+                <time class="date">{{ p.first_published_at|date:'Ymd' }}</time>
+              </li>
+            {% empty %}
+              <li class="date">글이 없습니다.</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endwith %}
+    {% endfor %}
+  </div>
+</section>

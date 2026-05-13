@@ -1,0 +1,32 @@
+{# JSON-LD WebSite + Organization + SearchAction (홈/카테고리 등 비-글 페이지) #}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "{{ request.scheme }}://{{ request.get_host }}/#website",
+      "url": "{{ request.scheme }}://{{ request.get_host }}/",
+      "name": "{{ effective_site_name }}",
+      "description": "{{ effective_tagline }}",
+      "inLanguage": "ko-KR",
+      "publisher": {"@id": "{{ request.scheme }}://{{ request.get_host }}/#organization"},
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "{{ request.scheme }}://{{ request.get_host }}/search/?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@type": "Organization",
+      "@id": "{{ request.scheme }}://{{ request.get_host }}/#organization",
+      "name": "{{ effective_site_name }}",
+      "url": "{{ request.scheme }}://{{ request.get_host }}/",
+      "logo": "{{ request.scheme }}://{{ request.get_host }}{% load static %}{% static 'favicon/logo.jpg' %}"
+    }
+  ]
+}
+</script>

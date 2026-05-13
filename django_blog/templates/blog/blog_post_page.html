@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags picture %}
+
+{% block og_type %}article{% endblock %}
+{% block extra_meta %}{% include "seo/jsonld_blogposting.html" %}{% endblock %}
+
+{% block content %}
+<article class="post">
+  <header>
+    <h1>{{ page.title }}</h1>
+    <p class="meta">
+      {% if page.author %}by <span>{{ page.author.name }}</span> · {% endif %}{% if page.category %}in <a href="/blog/{{ page.category.slug }}/">{{ page.category.name }}</a>, {% endif %}<time datetime="{{ page.first_published_at|date:'c' }}">{{ page.first_published_at|date:'Ymd' }}</time>
+    </p>
+  </header>
+
+  <div class="post-body">
+    {{ page.body }}
+  </div>
+
+  {# 함께 읽어보면 좋은 글 — 글머리표 + 제목만 #}
+  {% if related_posts %}
+  <section class="related-posts">
+    <h2 class="related-posts__head">함께 읽어보면 좋은 글</h2>
+    <ul class="related-posts__bullets">
+      {% for rp in related_posts %}
+        <li><a href="{% pageurl rp %}">{{ rp.title }}</a></li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  {# 공감 — IP당 1회 토글 (AJAX, 새로고침 X) #}
+  <div class="post-like" id="like">
+    <form method="post" action="{% url 'comments:toggle_like' page.pk %}" data-like-form>
+      {% csrf_token %}
+      <button type="submit" class="like-btn{% if user_has_liked %} is-liked{% endif %}" data-page="{{ page.pk }}" aria-pressed="{{ user_has_liked|yesno:'true,false' }}" aria-label="공감">
+        <svg class="like-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+        <span class="like-count">{{ page.likes_count }}</span>
+      </button>
+    </form>
+  </div>
+</article>
+
+{% load comments_tags %}
+{% render_comments page %}
+{% endblock %}

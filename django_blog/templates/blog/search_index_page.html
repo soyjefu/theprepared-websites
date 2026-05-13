@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags picture %}
+{% block content %}
+<header class="hero">
+  <h1>{{ page.title }}</h1>
+  {% if page.intro %}<p class="lead">{{ page.intro }}</p>{% endif %}
+</header>
+
+{% if page.intro_body %}{{ page.intro_body }}{% endif %}
+
+<form method="get" action="{{ page.url }}" style="margin-bottom:var(--space-40);">
+  <input type="search" name="q" value="{{ query }}" placeholder="검색어 입력" autofocus
+         style="width:100%; padding:.6rem .9rem; font:inherit; font-size:1rem; border:1px solid var(--color-border); border-radius:6px; background:var(--color-soft);">
+</form>
+
+{% if query %}
+  <p class="meta">‘{{ query }}’ 검색 결과 {% if results %}{{ results.paginator.count }}{% else %}0{% endif %}건</p>
+  {% if results %}
+  <ul class="post-card-list">
+    {% for post in results %}
+      <li>
+        <a class="post-card" href="{% pageurl post %}">
+          <div class="post-card__thumb">
+            {% if post.specific.cover_image %}{% picture post.specific.cover_image "fill-200x200" alt=post.title %}{% endif %}
+          </div>
+          <div class="post-card__body">
+            <div class="post-card__top">
+              <h2 class="post-card__title">{{ post.title }}</h2>
+              <time class="post-card__date" datetime="{{ post.first_published_at|date:'c' }}">{{ post.first_published_at|date:'Ymd' }}</time>
+            </div>
+            {% with excerpt=post.specific.intro|default:post.specific.search_description %}
+              {% if excerpt %}<p class="post-card__excerpt">{{ excerpt }}</p>{% endif %}
+            {% endwith %}
+          </div>
+        </a>
+      </li>
+    {% empty %}
+      <li>검색 결과가 없습니다.</li>
+    {% endfor %}
+  </ul>
+  {% if results.paginator.num_pages > 1 %}
+  <nav class="pagination" aria-label="페이지">
+    {% if results.has_previous %}<a href="?q={{ query|urlencode }}&page={{ results.previous_page_number }}">← 이전</a>{% endif %}
+    <span class="current">{{ results.number }} / {{ results.paginator.num_pages }}</span>
+    {% if results.has_next %}<a href="?q={{ query|urlencode }}&page={{ results.next_page_number }}">다음 →</a>{% endif %}
+  </nav>
+  {% endif %}
+  {% endif %}
+{% endif %}
+{% endblock %}

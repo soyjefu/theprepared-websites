@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags picture %}
+{% block content %}
+<header class="hero">
+  <h1>
+    {% if current_category %}{{ current_category.name }}
+    {% elif current_categories %}{% for c in current_categories %}{{ c.name }}{% if not forloop.last %} · {% endif %}{% endfor %}
+    {% else %}{{ page.title }}{% endif %}
+  </h1>
+  {% if current_category and current_category.description %}
+    <p class="lead">{{ current_category.description }}</p>
+  {% elif current_categories %}
+    <p class="lead">선택된 {{ current_categories|length }}개 카테고리의 모든 글</p>
+  {% elif page.intro %}
+    <p class="lead">{{ page.intro }}</p>
+  {% endif %}
+</header>
+
+{# 카테고리별 admin 편집 블록 #}
+{% if current_category and current_category.intro_body %}
+  {% include_block current_category.intro_body %}
+{% elif not current_category and page.intro_body %}
+  {% include_block page.intro_body %}
+{% endif %}
+
+<ul class="post-card-list">
+  {% for post in posts %}
+    <li>
+      <a class="post-card" href="{% pageurl post %}">
+        <div class="post-card__thumb">
+          {% if post.specific.cover_image %}{% picture post.specific.cover_image "fill-200x200" alt=post.title %}{% endif %}
+        </div>
+        <div class="post-card__body">
+          <div class="post-card__top">
+            <h2 class="post-card__title">{{ post.title }}</h2>
+            <time class="post-card__date" datetime="{{ post.first_published_at|date:'c' }}">{{ post.first_published_at|date:'Ymd' }}</time>
+          </div>
+          {% with excerpt=post.specific.intro|default:post.specific.search_description %}
+            {% if excerpt %}<p class="post-card__excerpt">{{ excerpt }}</p>{% endif %}
+          {% endwith %}
+        </div>
+      </a>
+    </li>
+  {% empty %}
+    <li>아직 글이 없습니다.</li>
+  {% endfor %}
+</ul>
+
+{% if posts.paginator and posts.paginator.num_pages > 1 %}
+<nav class="pagination" aria-label="페이지">
+  {% if posts.has_previous %}<a href="?page={{ posts.previous_page_number }}">← 이전</a>{% endif %}
+  <span class="current">{{ posts.number }} / {{ posts.paginator.num_pages }}</span>
+  {% if posts.has_next %}<a href="?page={{ posts.next_page_number }}">다음 →</a>{% endif %}
+</nav>
+{% endif %}
+{% endblock %}

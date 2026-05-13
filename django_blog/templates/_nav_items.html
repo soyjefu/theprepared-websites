@@ -1,0 +1,15 @@
+{% comment %}네비게이션 stream 렌더. NavSettings.header_menu / footer_menu 둘 다 사용.{% endcomment %}
+{% for block in stream %}
+  {% if block.block_type == "dropdown" %}
+    <div class="dropdown">
+      <button type="button">{{ block.value.label }}</button>
+      <div class="dropdown-menu{% if align_right %} dropdown-menu--right{% endif %}">
+        {% for item in block.value.items %}
+          <a href="{{ item.url }}">{{ item.label }}</a>
+        {% endfor %}
+      </div>
+    </div>
+  {% elif block.block_type == "link" %}
+    <a href="{{ block.value.url }}">{{ block.value.label }}</a>
+  {% endif %}
+{% endfor %}
