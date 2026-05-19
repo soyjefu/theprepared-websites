@@ -1,7 +1,8 @@
-"""모든 BlogPostPage 본문 이미지의 rendition 미리 생성.
+"""모든 BlogPostPage 본문 이미지의 rendition 미리 생성 (일괄/백필용).
 
 콜드 캐시 첫 방문자가 Pillow 변환 60초 기다리는 문제 해결.
-spec: width-800 + format-avif/webp/원본 3종.
+spec 목록은 apps.blog.tasks.SPECS 단일 출처를 공유한다.
+(평상시 신규 publish는 on_blog_post_published 시그널이 자동 prewarm)
 """
 from __future__ import annotations
 
@@ -10,21 +11,7 @@ import time
 
 from django.core.management.base import BaseCommand
 
-
-SPECS = [
-    "width-800",
-    "width-800|format-avif",
-    "width-800|format-webp",
-    "width-1920",            # lightbox용 고화질
-    "width-1920|format-avif",
-    "width-1920|format-webp",
-    "fill-600x600",          # 영상 기록 카드
-    "fill-600x600|format-avif",
-    "fill-600x600|format-webp",
-    "fill-200x200",          # 포스트 카드 썸네일
-    "fill-200x200|format-avif",
-    "fill-200x200|format-webp",
-]
+from apps.blog.tasks import SPECS
 
 
 class Command(BaseCommand):

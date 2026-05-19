@@ -624,7 +624,12 @@ class BlogPostPage(SeoMixin, Page):
         from apps.comments.models import PostLike
         from apps.comments.utils import get_client_ip, ip_hash
         ctx = super().get_context(request, *args, **kwargs)
-        ctx["related_posts"] = self.get_related_posts(4)
-        iph = ip_hash(get_client_ip(request))
-        ctx["user_has_liked"] = PostLike.objects.filter(page=self, ip_hash=iph).exists()
+        # 저장되지 않은 페이지(미리보기) 대응 — pk가 없으면 관련 조회 스킵
+        if self.pk:
+            ctx["related_posts"] = self.get_related_posts(4)
+            iph = ip_hash(get_client_ip(request))
+            ctx["user_has_liked"] = PostLike.objects.filter(page=self, ip_hash=iph).exists()
+        else:
+            ctx["related_posts"] = []
+            ctx["user_has_liked"] = False
         return ctx

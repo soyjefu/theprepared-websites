@@ -75,6 +75,26 @@ class CodeBlock(blocks.StructBlock):
         label = "코드"
 
 
+class DividerBlock(blocks.StructBlock):
+    """섹션 구분선 — 글의 흐름을 시각적으로 끊어준다."""
+    style = blocks.ChoiceBlock(
+        choices=[
+            ("line", "가는 선"),
+            ("dots", "점 세 개"),
+            ("space", "여백만 (선 없음)"),
+        ],
+        default="line",
+        help_text="구분선 모양",
+    )
+
+    class Meta:
+        icon = "minus"
+        template = "blog/blocks/divider.html"
+        preview_template = "blog/blocks/divider.html"
+        preview_value = {"style": "line"}
+        label = "구분선"
+
+
 class ContentStreamBlock(blocks.StreamBlock):
     """Gutenberg-like 본문 스트림."""
     heading = HeadingBlock()
@@ -82,6 +102,7 @@ class ContentStreamBlock(blocks.StreamBlock):
     image = ImageBlock()
     quote = QuoteBlock()
     code = CodeBlock()
+    divider = DividerBlock()
     embed = EmbedBlock(
         icon="media",
         template="blog/blocks/embed.html",

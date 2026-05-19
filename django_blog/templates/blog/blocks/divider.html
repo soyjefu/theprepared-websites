@@ -1,0 +1,9 @@
+{% if value.style == "dots" %}
+  <div class="post-divider post-divider--dots" role="separator" aria-hidden="true">
+    <span></span><span></span><span></span>
+  </div>
+{% elif value.style == "space" %}
+  <div class="post-divider post-divider--space" aria-hidden="true"></div>
+{% else %}
+  <hr class="post-divider post-divider--line">
+{% endif %}

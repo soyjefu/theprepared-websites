@@ -39,6 +39,19 @@ def _check() -> tuple[str, str]:
     return "up", "정상"
 
 
+@shared_task(name="core.publish_scheduled_pages", ignore_result=True)
+def publish_scheduled_pages() -> dict:
+    """Wagtail 예약 발행/만료 처리.
+
+    페이지 편집 화면 '설정' 탭의 go_live_at(예약 게시) / expire_at(예약 만료)에
+    도달한 리비전을 실제로 게시·해제한다. beat에서 주기 호출.
+    """
+    from django.core.management import call_command
+
+    call_command("publish_scheduled")
+    return {"ran": True}
+
+
 @shared_task
 def self_ping_healthz() -> dict:
     """주기 ping. 상태 전환(up↔down) 시에만 Discord 알림."""

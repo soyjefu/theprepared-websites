@@ -29,7 +29,8 @@
   </section>
   {% endif %}
 
-  {# 공감 — IP당 1회 토글 (AJAX, 새로고침 X) #}
+  {# 공감 — IP당 1회 토글 (AJAX, 새로고침 X) — 미저장 미리보기(pk 없음)에서는 숨김 #}
+  {% if page.pk %}
   <div class="post-like" id="like">
     <form method="post" action="{% url 'comments:toggle_like' page.pk %}" data-like-form>
       {% csrf_token %}
@@ -41,8 +42,9 @@
       </button>
     </form>
   </div>
+  {% endif %}
 </article>
 
 {% load comments_tags %}
-{% render_comments page %}
+{% if page.pk %}{% render_comments page %}{% endif %}
 {% endblock %}

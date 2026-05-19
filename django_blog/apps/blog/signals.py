@@ -28,7 +28,7 @@ def on_blog_post_save(sender, instance, created, **kwargs):
 
 
 def on_blog_post_published(sender, instance, **kwargs):
-    """글 publish 시 IndexNow로 Bing/Yandex에 즉시 통보."""
+    """글 publish 시: ① IndexNow 통보 ② 이미지 rendition prewarm."""
     if not instance.live:
         return
     try:
@@ -37,3 +37,10 @@ def on_blog_post_published(sender, instance, **kwargs):
         notify_indexnow.delay(url)
     except Exception as e:
         log.warning("IndexNow enqueue 실패 page=%s: %s", instance.pk, e)
+
+    # 본문·표지 이미지 rendition 사전 생성 — 첫 방문자 콜드 캐시 변환 대기 제거
+    try:
+        from apps.blog.tasks import prewarm_post_renditions
+        prewarm_post_renditions.delay(instance.pk)
+    except Exception as e:
+        log.warning("prewarm enqueue 실패 page=%s: %s", instance.pk, e)
