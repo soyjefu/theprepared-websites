@@ -5,7 +5,7 @@ from django.db import connection
 from django.http import Http404, HttpResponse, JsonResponse
 from django.urls import include, path, re_path
 from django.views.decorators.cache import never_cache
-from django.views.generic.base import RedirectView, TemplateView
+from django.views.generic.base import TemplateView
 
 from wagtail import urls as wagtail_urls
 from wagtail.admin import urls as wagtailadmin_urls
@@ -45,6 +45,11 @@ urlpatterns = [
         "robots.txt",
         TemplateView.as_view(template_name="seo/robots.txt", content_type="text/plain"),
         name="robots",
+    ),
+    path(
+        "ads.txt",
+        TemplateView.as_view(template_name="seo/ads.txt", content_type="text/plain"),
+        name="ads_txt",
     ),
     # IndexNow 키 검증 (사이트 루트에 `<key>.txt` 호스팅)
     re_path(r"^(?P<key>[0-9a-fA-F]{8,128})\.txt$", indexnow_key_file, name="indexnow_key"),
