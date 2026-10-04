@@ -21,8 +21,7 @@ from django.db import transaction
 from django.utils import timezone
 from taggit.models import Tag
 
-from apps.blog.models import BlogIndexPage, BlogPostPage, Category
-from apps.images.models import CustomImage
+from apps.blog.models import BlogIndexPage, BlogPostPage
 from apps.migration.gutenberg import to_streamfield
 from apps.migration.models import MigrationMap, MigrationRun
 from apps.migration.wp_db import fetch_all
